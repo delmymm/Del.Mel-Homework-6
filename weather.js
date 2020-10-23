@@ -36,6 +36,9 @@ function init() {
 
 var lat;
 var long;
+var temp;
+var tempMax;
+var tempMin;
 
 function getApiInfo() {
     alert('apiInfo called');
@@ -57,6 +60,9 @@ function getApiInfo() {
         console.log(dataNow);
         lat = dataNow.coord.lat;
         lon = dataNow.coord.lon;
+        temp = dataNow.main.temp;
+        tempMax = dataNow.main.temp_max;
+        tempMin = dataNow.main.temp_min;
         fiveDay();
         /*
         data.forEach((movie) => {

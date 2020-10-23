@@ -4,3 +4,16 @@
     color: pink;
     display: inline-block;
 }
+#search {
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+#temp {
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+#forecast {
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
