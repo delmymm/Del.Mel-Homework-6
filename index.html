@@ -29,24 +29,27 @@
             <div id="cityList">
             </div>
         </div>
-            <div class="card col-md-6" id="temp">
-                <div class="card-body">
-                </div>
+        <div class="col-md-6" id="temp">
+            <div class="card">
+                <p><strong>City:</strong> <span id="city-name"></span></p>
+                <p><strong>Temperature:</strong> <span id="current-temp"></span></p>
+                <p><strong>Humidity:</strong> <span id="current-humidity"></span></p>
+                <p><strong>UV Index:</strong> <span id="current-index"></span></p>
             </div>
-            <div class="card col-md-6" id="forecast">
-                <div class="card-body">
-                    <h1>5 Day Forecast:</h1>
-                    <div class="card">
-                        <div class="sky">
-                            <div class="sun"></div>
-                            <div class="cloud">
-                                <div class="circle-small"></div>
-                                <div class="circle-tall"></div>
-                                <div class="circle-medium"></div>
-                            </div>
+        </div>
+        <div class="col-md-6" id="forecast">
+            <div class="card">
+                <h1>5 Day Forecast:</h1>
+                <div class="sky">
+                    <div class="sun"></div>
+                    <div class="cloud">
+                        <div class="circle-small"></div>
+                        <div class="circle-tall"></div>
+                        <div class="circle-medium"></div>
                     </div>
                 </div>
             </div>
+        </div>
         <script src="weather.js"></script>
     </body>
 
