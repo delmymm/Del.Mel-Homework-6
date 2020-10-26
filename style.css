@@ -11,9 +11,32 @@
 }
 #temp {
     margin-left: 25px;
-    margin-bottom: 25px;
 }
 #forecast {
     margin-left: 25px;
-    margin-bottom: 25px;
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+}
+
+.dayBox {
+    width:15%;
+}
+.dayBox img{
+    width: 90%;
+}
+
+.uvi span {
+    padding: 0.3 0.7;
+    display: inline-block;
+}
+.severe {
+    color: white;
+    background-color: #800;
+}
+.moderate {
+    background-color: yellow;
+}
+.favorable {
+    background-color: #090;
 }
