@@ -7,6 +7,7 @@ var forecastBox;
 var cityButton;
 var cityInput;
 var tempBox;
+
 /* weather.js */
 
 /*
@@ -21,14 +22,12 @@ const keyParam = 'appid=' + APIKey;
 const currentEndpoint = 'https://api.openweathermap.org/data/2.5/weather?units=imperial&' + keyParam + '&q=';
 const fiveDayEndpoint = 'https://api.openweathermap.org/data/2.5/onecall?units=imperial&' + keyParam;
 
-
 var cityTodayInfo = {};
 var cityForecastInfo = {};
+
 /*
 cityInfo['Chicago']['temp']  ...
-
-we will have a function cityHistoryClick(cityName) {
-    
+we will have a function cityHistoryClick(cityName) {   
 }
 */
 
@@ -77,10 +76,7 @@ function getApiInfo() {
             console.log('error - first request')
         }
     };
-
     request.send();
-
-
 }
 
 /* cloudInt is from 0 to 100;
@@ -92,6 +88,7 @@ uv index: color, favorable (0-2), moderate (3-5), or severe (<5) -
 write a function using function cloudImg as templaate
 
 */
+
 function cloudImg(cloudInt) {
     if (cloudInt > 66) return '<img src="Assets/cloud.png" alt="very cloudy">';
     else if (cloudInt > 33) return '<img src="Assets/half-cloud.png" alt="partially cloudy">';
@@ -107,15 +104,11 @@ function uvi_format(uvi) {
 function fiveDay() {
     var fiveDayUri = fiveDayEndpoint + '&lat=' + lat + '&lon=' + lon;
     var fiveDayInfo = {};
-
     request = new XMLHttpRequest();
-
     request.open('GET', fiveDayUri, true);
     console.log(fiveDayEndpoint);
     request.onload = function () {
-
         var dataWeek = JSON.parse(this.response)
-
         if (request.status >= 200 && request.status < 400) {
             console.log(dataWeek);
             for (i = 0; i < 7; i++) {
@@ -126,19 +119,15 @@ function fiveDay() {
                 fiveDayInfo[i].wind_speed = dataWeek.daily[i].wind_speed;
                 fiveDayInfo[i].humidity = dataWeek.daily[i].humidity;
                 fiveDayInfo[i].uvi = dataWeek.daily[i].uvi;
-
             }
             console.log(fiveDayInfo);
             formatFiveDay(fiveDayInfo);
-
         } else {
             console.log('error - five day request')
         }
-
     };
 
     request.send();
-
 
     return fiveDayInfo;
 }
@@ -171,13 +160,13 @@ function formatFiveDay(infoArray) {
     forecastBox.innerHTML = content;
     fiveDayHtml = content;
     todayHtml = todayInfo;
+
     /* Add city to link list of city history */
 
     /* Add city info to local storage */
 }
 
 function cityClick() {
-
 }
 
 function storageSaveCity() {
@@ -187,7 +176,6 @@ function storageSaveCity() {
 }
 
 function storageGetCity() {
-
     let raw = window.localStorage.getItem('temp');
     console.log(raw);
     let stringified = JSON.parse(raw);

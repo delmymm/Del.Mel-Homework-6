@@ -12,3 +12,6 @@ The traveler is able to search a city and get the following:
     UV index
 
 Particular colors in the uv index tell the user whether the conditions are favorable, moderate, or severe. 
+
+![weather dashboard demo](./Assets/screenshot1.png)
+![weather dashboard demo](./Assets/screenshot2.png)
