@@ -1,33 +1,38 @@
 #header {
-    justify-content: center;
     font-size: xx-large;
     color: pink;
-    display: inline-block;
+    text-align: center;
 }
 #search {
     margin-top: 25px;
     margin-left: 25px;
     margin-bottom: 25px;
+    width: 200px;
+    float: left;
+}
+#results {
+    width: 700px;
+    float: left;
+    border-style: solid;
+    padding-left: 25px;
 }
 #temp {
     margin-left: 25px;
     margin-bottom: 25px;
 }
-#forecast {
+#forecast, #pForecast {
     margin-left: 25px;
     margin-bottom: 25px;
     display: flex;
     flex-direction: row;
-    width: 70%;
+    width: 90%;
 }
-
 .dayBox {
-    width:15%;
+    width: 35%;
 }
 .dayBox img{
     width: 90%;
 }
-
 .uvi span {
     padding: 0.3 0.7;
     display: inline-block;
@@ -41,4 +46,16 @@
 }
 .favorable {
     background-color: #090;
+}
+#historyRow {
+    width: 250px;
+    float: left;
+}
+#actionRow {
+    width: 1200px;
+    float: left;
+}
+#historyRow, a {
+    display: block;
+    padding: 0.5, 1;
 }

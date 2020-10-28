@@ -4,8 +4,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
             integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
             crossorigin="anonymous" />
@@ -14,26 +12,32 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-light bg-light">
-            <span class="navbar-brand mb-0 h1 mx-auto" id="header">Weather Dashboard</span>
-        </nav>
-        <div class="card row col-md-3" id="search">
-            <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Search for a city:</label>
-                    <input class="form-control" id="cityInput">
-                    <div class="searchBtn" id="cityGo"><i class="fa fa-search"></i></div>
-                    <span id="apiDebug"></span>
+        <h1 id="header">Weather Dashboard</h1>
+        <div id="actionRow">
+            <div class="row">
+                <div class="card col-md-3" id="search">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Search for a city:</label>
+                            <input id="cityInput" style="width: 110px;">
+                            <div class="searchBtn" id="cityGo" style="float:right;"><i class="fa fa-search"
+                                    style="display:inline; margin-right: 4em;"></i></div>
+                            <span id="apiDebug"></span>
+                        </div>
+                    </form>
+                    <div id="cityList">
+                    </div>
+                    <div id="historyRow">
+                    </div>
                 </div>
-            </form>
-            <div id="cityList">
+                <div id="results">
+                    <h1>Current Weather:</h1>
+                    <div id="temp">
+                    </div>
+                    <h1>5 Day Forecast:</h1>
+                    <div id="forecast">
+                </div>
             </div>
-        </div>
-        <h1 style="margin-left: 25px;">Current Weather:</h1>
-        <div class="col-md-6" id="temp">
-        </div>
-        <h1 style="margin-left: 25px;">5 Day Forecast:</h1>
-        <div id="forecast">
         </div>
         <script src="weather.js"></script>
     </body>

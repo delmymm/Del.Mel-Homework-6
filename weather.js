@@ -2,34 +2,22 @@ var currentCityName;
 var currentTemp;
 var currentHumidity;
 var currentUvIndex;
-/* added */
 var forecastBox;
 var cityButton;
 var cityInput;
 var tempBox;
-
-/* weather.js */
-
-/*
-
-0d48137e0b7a98d31339d9bd38c443e9
-https://home.openweathermap.org/api_keys
-
-*/
+var pForecastBox;
+var pTempBox;
+var historyRow;
 
 const APIKey = '0d48137e0b7a98d31339d9bd38c443e9';
 const keyParam = 'appid=' + APIKey;
 const currentEndpoint = 'https://api.openweathermap.org/data/2.5/weather?units=imperial&' + keyParam + '&q=';
 const fiveDayEndpoint = 'https://api.openweathermap.org/data/2.5/onecall?units=imperial&' + keyParam;
 
+
 var cityTodayInfo = {};
 var cityForecastInfo = {};
-
-/*
-cityInfo['Chicago']['temp']  ...
-we will have a function cityHistoryClick(cityName) {   
-}
-*/
 
 document.onload = init();
 
@@ -44,12 +32,17 @@ function init() {
     currentHumidity = document.querySelector("#current-humidity");
     currentUvIndex = document.querySelector("#current-index");
     tempBox = document.querySelector('#temp');
+    pForecastBox = document.getElementById('pForecast');
+    pTempBox = document.querySelector('#pTemp');
+    historyRow = document.getElementById('historyRow');
+    initHistory();
 }
 
 var lat;
 var long;
 var temp;
 var city;
+var historyCity;
 
 function getApiInfo() {
     city = cityInput.value;
@@ -70,24 +63,17 @@ function getApiInfo() {
             lat = dataNow.coord.lat;
             lon = dataNow.coord.lon;
             temp = dataNow.main.temp;
-
+            let history = historyRow.innerHTML;
+            historyRow.innerHTML = history + '<a href="#" onclick="storageGetCity(\'' + city + '\')">' + city + '</a>';
             fiveDay();
         } else {
             console.log('error - first request')
         }
     };
+
     request.send();
+
 }
-
-/* cloudInt is from 0 to 100;
-returns an html string of an image corresponding to cloudiness 
-images: sun.png for 0-33, half-cloud.png for 34-66, cloud.png for 67-100
-
-temperature, the humidity, the wind speed, and the UV index
-uv index: color, favorable (0-2), moderate (3-5), or severe (<5) -
-write a function using function cloudImg as templaate
-
-*/
 
 function cloudImg(cloudInt) {
     if (cloudInt > 66) return '<img src="Assets/cloud.png" alt="very cloudy">';
@@ -98,17 +84,21 @@ function cloudImg(cloudInt) {
 function uvi_format(uvi) {
     if (uvi > 5) return '<span class="severe">' + uvi + '</span>';
     if (uvi > 2) return '<span class="moderate">' + uvi + '</span>';
+    if (uvi == 'undefined') return ' [ - undefined - ] ';
     return '<span class="favorable">' + uvi + '</span>';
 }
 
 function fiveDay() {
     var fiveDayUri = fiveDayEndpoint + '&lat=' + lat + '&lon=' + lon;
     var fiveDayInfo = {};
+
     request = new XMLHttpRequest();
+
     request.open('GET', fiveDayUri, true);
     console.log(fiveDayEndpoint);
     request.onload = function () {
         var dataWeek = JSON.parse(this.response)
+
         if (request.status >= 200 && request.status < 400) {
             console.log(dataWeek);
             for (i = 0; i < 7; i++) {
@@ -160,24 +150,50 @@ function formatFiveDay(infoArray) {
     forecastBox.innerHTML = content;
     fiveDayHtml = content;
     todayHtml = todayInfo;
-
-    /* Add city to link list of city history */
-
-    /* Add city info to local storage */
+    storageSaveCity();
 }
 
 function cityClick() {
+
+}
+
+function initHistory() {
+    let raw = window.localStorage.getItem('cityTodayInfo');
+    cityTodayInfo = JSON.parse(raw);
+    if (cityTodayInfo == null) cityTodayInfo = {};
+    let historyMenu = '';
+    for (const [city, html] of Object.entries(cityTodayInfo)) {
+        historyMenu += '<a href="#" onclick="storageGetCity(\'' + city + '\')">' + city + '</a>';
+    }
+    historyRow.innerHTML = historyMenu;
 }
 
 function storageSaveCity() {
-    let stringified = JSON.stringify(todayHtml);
-    console.log(stringified);
-    window.localStorage.setItem('temp', stringified);
+    let raw = window.localStorage.getItem('cityTodayInfo');
+    cityTodayInfo = JSON.parse(raw);
+    if (cityTodayInfo == null) cityTodayInfo = {};
+    cityTodayInfo[city] = '<h2>' + city + '</h2>' + todayHtml;
+    let stringified = JSON.stringify(cityTodayInfo);
+    window.localStorage.setItem('cityTodayInfo', stringified);
+
+    raw = window.localStorage.getItem('cityForecastInfo');
+    cityForecastInfo = JSON.parse(raw);
+    if (cityForecastInfo == null) cityForecastInfo = {};
+    cityForecastInfo[city] = fiveDayHtml;
+    stringified = JSON.stringify(cityForecastInfo);
+    window.localStorage.setItem('cityForecastInfo', stringified);
 }
 
-function storageGetCity() {
-    let raw = window.localStorage.getItem('temp');
+function storageGetCity(pastCity) {
+    tempBox.innerHTML = '';
+    forecastBox.innerHTML = '';
+    let raw = window.localStorage.getItem('cityTodayInfo');
     console.log(raw);
-    let stringified = JSON.parse(raw);
-    return stringified;
+    cityTodayInfo = JSON.parse(raw);
+    console.log(cityTodayInfo);
+    tempBox.innerHTML = cityTodayInfo[pastCity];
+
+    raw = window.localStorage.getItem('cityForecastInfo');
+    cityForecastInfo = JSON.parse(raw);
+    forecastBox.innerHTML = cityForecastInfo[pastCity];
 }
